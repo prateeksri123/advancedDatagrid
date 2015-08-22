@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title> - jsFiddle demo</title>
+  
+  <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
+  
+  
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+  <style type='text/css'>
+    tr, td
+{
+    border: 1px solid black;
+}
+tr.header
+{
+    cursor:pointer;
+}
+  </style>
+  
+
+
+<script type='text/javascript'>//<![CDATA[ 
+$(function(){
+$('.header').click(function(){
+
+$(this).nextUntil('tr.header').slideToggle(1000);
+});
+});//]]>  
+
+</script>
+
+
+</head>
+<body>
+  <table border="0">
+  <tr  class="header">
+    <td colspan="2">Header</td>
+  </tr>
+  <tr>
+    <td>data</td>
+    <td>data</td>
+  </tr>
+  <tr>
+    <td>data</td>
+    <td>data</td>
+  </tr>
+  <tr  class="header">
+    <td colspan="2">Header</td>
+  </tr>
+  <tr>
+    <td>date</td>
+    <td>data</td>
+  </tr>
+  <tr>
+    <td>data</td>
+    <td>data</td>
+  </tr>
+  <tr>
+    <td>data</td>
+    <td>data</td>
+  </tr>
+</table>
+  
+</body>
+
+
+</html>
+

@@ -1,0 +1,35 @@
+table{
+width:100%;
+}
+
+th, td{
+border:1px solid black;	
+}
+tr.group,
+tr.group:hover {
+    background-color: #ddd !important;
+}
+
+.container {
+    width:100%;
+    border:1px solid #d3d3d3;
+}
+.container div {
+    width:100%;
+}
+.container .header {
+    background-color:#d3d3d3;
+    padding: 2px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.container .content {
+    display: none;
+    padding : 5px;
+}
+
+tr.header
+{
+    cursor:pointer;
+    background-color: #33CCFF;
+}

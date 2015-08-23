@@ -3,19 +3,33 @@
  */
 var proto = Object.create(HTMLElement.prototype);
 
-proto.test = "this.getAttribute('test')";
+proto.groupBy = "";
+proto.dataProvider = [];
+proto.header = [];
+proto.refreshGrid = function(){
+	console.log(this.groupBy);
+	console.log(typeof this.dataProvider);
+	this.drawGrid();
+	
+};
 
 proto.createdCallback = function() {
 	console.log("created");
-	this.innerHTML = this.test + '<table id="advanceGrid" class="display" cellspacing="0" width="100%"></table>';
-	var groupBy = "office";
-	  	$.get("data.json", 
-	  	   function(data){
+	this.innerHTML = '<table id="advanceGrid" class="display" cellspacing="0" width="100%"></table>';
+};
+
+proto.drawGrid = function() {
+	          var temp = this.dataProvider;
+	          var groupBy = this.groupBy;
+	          var headerList = this.header;
+	  	        var dataSource =this.dataProvider; /*= Object.keys(temp).map(function(k) { 
+	  	        	return temp[k]; 
+	  	        });*/
 	  	    	var u = {}, a = [], hList = {},hArray = [];
 	  	    	var result = "";
 	  	    	var header = "";
 	  	    	var headerCreated = false;
-	  	    	$(data).each(function(index, element){
+	  	    	$(dataSource).each(function(index, element){
 	  	    		if(!u.hasOwnProperty(element[groupBy])) {
                             a.push(element[groupBy]);
                              u[element[groupBy]] = []; 
@@ -32,7 +46,8 @@ proto.createdCallback = function() {
                 });
                  header += '<tr> ';
                   $.each(hList, function(k, v) {
-                  	header += '<th> '+ k +' </th>';
+                  	var headerLabel = headerList[k] || k;
+                  	header += '<th> '+ headerLabel +' </th>';
                   });
                    header += '</tr> ';
                 $(u).each(function(index, innerArray) {
@@ -54,11 +69,12 @@ proto.createdCallback = function() {
                   console.log(JSON.stringify(hList));
                 $('#advanceGrid').append(header);
                 $('#advanceGrid').append(result);
-                //console.log(result);
-                //console.log(JSON.stringify(u));
-	  	    });
+
+	  	    
+
 };
-proto.attachedCallback = function() {console.log("attached" + this.test);};
+
+proto.attachedCallback = function() {console.log("attached");};
 document.registerElement('x-advancegrid',{
 	prototype: proto
 });

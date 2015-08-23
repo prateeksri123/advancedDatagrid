@@ -16,6 +16,16 @@
 		-->
 		<script>
 			function onDocumentLoaded() {
+				
+				$.get("data.json", 
+	  	          function(data){
+	  	          	var grid = document.getElementById("advanceGrid");
+				    grid.groupBy = "office";
+	  	          	grid.dataProvider = data;
+	  	          	grid.header = JSON.parse('{"name": "Employee Name","position": "Designamtion","office": "Office Location","startDate": "DOJ","salary": "Salary"}');
+	  	          	grid.refreshGrid();
+	  	          });
+				
 				$('body').on('click', 'tr.header', function() {
 
 					$(this).nextUntil('tr.header').slideToggle(500, function() {
@@ -67,7 +77,7 @@
 
 			<div data-role="main" class="ui-content">
 
-				<x-advancegrid test="XXXXX">
+				<x-advancegrid id="advanceGrid" test="XXXXX">
 
 					<x-advancegrid>
 			</div>

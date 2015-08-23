@@ -22,7 +22,8 @@
 	  	          	var grid = document.getElementById("advanceGrid");
 				    grid.groupBy = "office";
 	  	          	grid.dataProvider = data;
-	  	          	grid.header = JSON.parse('{"name": "Employee Name","position": "Designamtion","office": "Office Location","startDate": "DOJ","salary": "Salary"}');
+	  	          	grid.header = JSON.parse('{"name": "Employee Name","position": "Designamtion","office": "Office Location","startDate": "DOJ","salary": "Salary", "age":"Age"}');
+	  	          	grid.rowStyle = JSON.parse('{"evenRowColor":"#fff000","oddRowColor":"#C0C0C0"}');
 	  	          	grid.refreshGrid();
 	  	          });
 				

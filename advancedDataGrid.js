@@ -2,11 +2,18 @@
  * @author Prateek.Srivastava
  */
 var proto = Object.create(HTMLElement.prototype);
-
+var u = {}, a = [], hList = {}, hArray = [];
+proto.sortDirection = "asc";
 proto.groupBy = "";
 proto.dataProvider = [];
-proto.rowStyle = {"evenRowColor":"#ffffff","oddRowColor":"#C0C0C0"};
+proto.groupedProvider = {};
+
+proto.rowStyle = {
+	"evenRowColor" : "#ffffff",
+	"oddRowColor" : "#C0C0C0"
+};
 proto.header = [];
+
 proto.refreshGrid = function() {
 	console.log(this.groupBy);
 	console.log( typeof this.dataProvider);
@@ -19,20 +26,10 @@ proto.createdCallback = function() {
 	this.innerHTML = '<table id="advanceGrid" class="display" cellspacing="0" width="100%"></table>';
 };
 
-proto.drawGrid = function() {
-	var temp = this.dataProvider;
-	var groupBy = this.groupBy;
-	var headerList = this.header;
-	var rowStyle = this.rowStyle;
+proto.makeGroups = function() {
+	console.log("makeGroups");
 	var dataSource = this.dataProvider;
-	/*= Object.keys(temp).map(function(k) {
-	 return temp[k];
-	 });*/
-	var u = {}, a = [], hList = {}, hArray = [];
-	var result = "";
-	var header = "";
-	var headerCreated = false;
-	var evenRow=true;
+	var groupBy = this.groupBy;
 	$(dataSource).each(function(index, element) {
 		if (!u.hasOwnProperty(element[groupBy])) {
 			a.push(element[groupBy]);
@@ -48,16 +45,53 @@ proto.drawGrid = function() {
 		});
 
 	});
+	this.groupedProvider = u;
+	this.sortArray(this.groupBy);
+
+};
+
+proto.sortArray = function(sortBy, sortDirection) {
+	console.log("sortArray");
+	$(this.groupedProvider).each(function(index, innerArray) {
+		console.log(innerArray);
+		$.each(innerArray, function(key, value) {
+			value.sort(function(a, b) {
+				if (this.sortDirection === "asc") {
+					this.sortDirection = "dsc";
+					return a[sortBy].localeCompare(b[sortBy]);
+				} else {
+					this.sortDirection = "asc";
+					return !a[sortBy].localeCompare(b[sortBy]);
+				}
+
+			});
+		});
+
+	});
+	this.drawGrid();
+};
+
+proto.drawGrid = function() {
+	console.log("drawGrid");
+	var temp = this.dataProvider;
+	var headerList = this.header;
+	var rowStyle = this.rowStyle;
+	var result = "";
+	var header = "";
+	var headerCreated = false;
+	var evenRow = true;
+	var Table = document.getElementById("advanceGrid");
+	Table.innerHTML = "";
 	header += '<tr> ';
 	$.each(hList, function(k, v) {
-		header += '<th> ' + (headerList[k] || k) + ' </th>';
+		header += '<th><button onclick="sortArray(&quot;' + k + '&quot;)"> ' + (headerList[k] || k) + ' </button></th>';
 	});
 	header += '</tr> ';
-	$(u).each(function(index, innerArray) {
+	$(this.groupedProvider).each(function(index, innerArray) {
 		$.each(innerArray, function(key, value) {
 			result += '<tr class="header"> <td ><img id="img" src="icons/expand_collapse_minus.gif"/> <b>' + key + '</b></td> </tr>';
 			$(value).each(function(index1, element) {
-				
+
 				if (evenRow) {
 					rowColor = rowStyle["evenRowColor"];
 					evenRow = false;

@@ -88,7 +88,7 @@ proto.drawGrid = function() {
 	Table.innerHTML = "";
 	header += '<tr> ';
 	$.each(hList, function(k, v) {
-		header += '<th><button style="width:100%;" onclick="sortArray(&quot;' + k + '&quot;)"> ' + (headerList[k] || k) + ' </button></th>';
+		header += '<th><button class="tableHeader" onclick="sortArray(&quot;' + k + '&quot;)"> ' + (headerList[k] || k) + ' </button></th>';
 	});
 	header += '</tr> ';
 	$(this.groupedProvider).each(function(index, innerArray) {

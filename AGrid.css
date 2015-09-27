@@ -33,3 +33,7 @@ tr.header
     cursor:pointer;
     background-color: #33CCFF;
 }
+
+.tableHeader {
+	width: 100%
+}

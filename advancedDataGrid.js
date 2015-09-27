@@ -50,21 +50,25 @@ proto.makeGroups = function() {
 
 };
 
-proto.sortArray = function(sortBy, sortDirection) {
-	console.log("sortArray");
+proto.sortArray = function(sortBy) {
+	console.log("sortArray " + sortBy);
+	this.sortDirection = this.sortDirection === "asc" ? "dsc" : "asc";
+	var sortedTo = this.sortDirection;
 	$(this.groupedProvider).each(function(index, innerArray) {
-		console.log(innerArray);
 		$.each(innerArray, function(key, value) {
+			console.log("sortGroup " + key + "  " + sortedTo);
+			
 			value.sort(function(a, b) {
-				if (this.sortDirection === "asc") {
-					this.sortDirection = "dsc";
-					return a[sortBy].localeCompare(b[sortBy]);
-				} else {
-					this.sortDirection = "asc";
-					return !a[sortBy].localeCompare(b[sortBy]);
-				}
-
+			   var result = 0;
+			   if(sortedTo === "asc") {
+			   	result = a[sortBy].localeCompare(b[sortBy]);
+			   } else {
+			   	result = b[sortBy].localeCompare(a[sortBy]);
+			   }
+			   console.log(result);
+				return result;
 			});
+			console.log(value.toString());
 		});
 
 	});
@@ -78,7 +82,7 @@ proto.drawGrid = function() {
 	var rowStyle = this.rowStyle;
 	var result = "";
 	var header = "";
-	var headerCreated = false;
+	
 	var evenRow = true;
 	var Table = document.getElementById("advanceGrid");
 	Table.innerHTML = "";
